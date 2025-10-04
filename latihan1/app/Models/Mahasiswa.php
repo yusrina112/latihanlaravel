@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Clas;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +12,14 @@ class Mahasiswa extends Model
     protected $table ='mahasiswa';
     
     // Kolom yang bisa diisi mass-assignment 
-    protected $fillable =[
+    protected $fillable = [
         'nama',
         'nim',
+        'kelas_id'
     ];
+
+    public function kelas()
+    {
+        return $this->belongsTo(Clas::class);
+    }
 }
