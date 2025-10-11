@@ -5,6 +5,8 @@ use App\Http\Controllers\matakuliahController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\StudentRegisterController;
+use App\Http\Controllers\EkycController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +36,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/kelas', [kelasController::class, 'index'])->name('kelas.index');
     Route::post('/kelas', [kelasController::class, 'store'])->name('kelas.store');
     
+    //Student Register
+    Route::get('/register-mahasiswa', [StudentRegisterController::class, 'showRegistrationForm'])->name('register.mahasiswa');
+    Route::post('/register-mahasiswa', [StudentRegisterController::class, 'register']);
+
+    Route::middleware(['auth'])->prefix('ekyc')->group(function () {
+        Route::get('step1', [EkycController::class, 'step1'])->name('ekyc.step1');
+        Route::post('step1',[EkycController::class,'storeStep1'])->name('ekyc.storeStep1');
+
+    // sementara redirect kosong untuk step2
+    Route::get('step',function(){
+        return "Step2: Upload Dokumen (belum dibuat)";
+    })->name('ekyc.step2');
+    });
 
 });
 
